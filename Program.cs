@@ -10,6 +10,8 @@ namespace xadrez
 
             tabuleiro = new(8, 8);
 
+            Tela.ImprimirTabuleiro(tabuleiro);
+
             Console.WriteLine();
         }
     }
