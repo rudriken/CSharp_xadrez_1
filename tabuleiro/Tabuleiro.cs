@@ -10,9 +10,44 @@
             return Pecas[linha, coluna];
         }
 
+        public Peca RetornarUmaPeca(Posicao posicao)
+        {
+            return Pecas[posicao.Linha, posicao.Coluna];
+        }
+
+        public bool ExistePeca(Posicao posicao)
+        {
+            ValidarPosicao(posicao);
+            return RetornarUmaPeca(posicao) != null;
+        }
+
         public void ColocarPeca(Peca peca, Posicao posicao) {
+            if (ExistePeca(posicao))
+            {
+                throw new TabuleiroException("Jé existe uma peça nessa posição!");
+            }
+
             Pecas[posicao.Linha, posicao.Coluna] = peca;
             peca.Posicao = posicao;
+        }
+
+        public bool VerificarPosicao(Posicao posicao)
+        {
+            if (
+                posicao.Linha < 0 || posicao.Linha >= Linhas || 
+                posicao.Coluna < 0 || posicao.Coluna >= Colunas
+            )            
+                return false;            
+
+            return true;
+        }
+
+        public void ValidarPosicao(Posicao posicao)
+        {
+            if (!VerificarPosicao(posicao))
+            {
+                throw new TabuleiroException("Posição inválida!");
+            }
         }
     }
 }
