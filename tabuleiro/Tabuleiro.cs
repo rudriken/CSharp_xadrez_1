@@ -4,14 +4,14 @@
     {
         public int Linhas { get; set; } = linhas;
         public int Colunas { get; set; } = colunas;
-        private readonly Peca[,] Pecas = new Peca[linhas, colunas];
+        private readonly Peca?[,] Pecas = new Peca[linhas, colunas];
 
-        public Peca RetornarUmaPeca(int linha, int coluna)
+        public Peca? RetornarUmaPeca(int linha, int coluna)
         {
             return Pecas[linha, coluna];
         }
 
-        public Peca RetornarUmaPeca(Posicao posicao)
+        public Peca? RetornarUmaPeca(Posicao posicao)
         {
             return Pecas[posicao.Linha, posicao.Coluna];
         }
@@ -22,13 +22,29 @@
             return RetornarUmaPeca(posicao) != null;
         }
 
-        public void ColocarPeca(Peca peca, Posicao posicao)
+        public void ColocarPeca(Peca? peca, Posicao posicao)
         {
             if (ExistePeca(posicao))
                 throw new TabuleiroException("Jé existe uma peça nessa posição!");
 
             Pecas[posicao.Linha, posicao.Coluna] = peca;
-            peca.Posicao = posicao;
+
+            if (peca != null)
+                peca.Posicao = posicao;
+        }
+
+        public Peca? RetirarPeca(Posicao posicao)
+        {
+            Peca? aux;
+
+            aux = RetornarUmaPeca(posicao);
+
+            if (aux == null)
+                return null;
+
+            aux.Posicao = null;
+            Pecas[posicao.Linha, posicao.Coluna] = null;
+            return aux;
         }
 
         public bool VerificarPosicao(Posicao posicao)
