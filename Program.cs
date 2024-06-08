@@ -9,6 +9,7 @@ namespace xadrez
         {
             PartidaDeXadrez partida;
             Posicao origem, destino;
+            bool[,] posicoesPossiveis;
 
             try
             {
@@ -23,6 +24,16 @@ namespace xadrez
 
                     Console.Write("Origem: ");
                     origem = Tela.LerPosicaoXadrez().ToPosicao();
+
+                    posicoesPossiveis = 
+                        partida.Tabuleiro.RetornarUmaPeca(origem)?.MovimentosPossiveis() ?? 
+                        new bool[partida.Tabuleiro.Linhas, partida.Tabuleiro.Colunas];
+
+
+
+                    Console.Clear();
+                    Tela.ImprimirTabuleiro(partida.Tabuleiro, posicoesPossiveis);
+
                     Console.Write("Destino: ");
                     destino = Tela.LerPosicaoXadrez().ToPosicao();
 
