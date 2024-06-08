@@ -28,97 +28,70 @@ namespace xadrez_jogo
 
             Posicao pos = new(0, 0);
 
-            // "norte"
             if (Posicao != null)
             {
+                // "norte"
                 pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna);
 
                 if (tab.VerificarPosicao(pos) && PodeMover(pos))
                 {
                     matriz[pos.Linha, pos.Coluna] = true;
                 }
-            }
 
-            // "nordeste"
-            if (Posicao != null)
-            {
+                // "nordeste"
                 pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna + 1);
 
                 if (tab.VerificarPosicao(pos) && PodeMover(pos))
                 {
                     matriz[pos.Linha, pos.Coluna] = true;
                 }
-            }
 
-            // "leste"
-            if (Posicao != null)
-            {
+                // "leste"
                 pos.DefinirValores(Posicao.Linha, Posicao.Coluna + 1);
 
                 if (tab.VerificarPosicao(pos) && PodeMover(pos))
                 {
                     matriz[pos.Linha, pos.Coluna] = true;
-
                 }
-            }
 
-            // "sudeste"
-            if (Posicao != null)
-            {
+                // "sudeste"
                 pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna + 1);
 
                 if (tab.VerificarPosicao(pos) && PodeMover(pos))
                 {
                     matriz[pos.Linha, pos.Coluna] = true;
-
                 }
-            }
 
-            // "sul"
-            if (Posicao != null)
-            {
+                // "sul"
                 pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna);
 
                 if (tab.VerificarPosicao(pos) && PodeMover(pos))
                 {
                     matriz[pos.Linha, pos.Coluna] = true;
-
                 }
-            }
 
-            // "sudoeste"
-            if (Posicao != null)
-            {
+                // "sudoeste"
                 pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna - 1);
 
                 if (tab.VerificarPosicao(pos) && PodeMover(pos))
                 {
                     matriz[pos.Linha, pos.Coluna] = true;
-
                 }
-            }
 
-            // "oeste"
-            if (Posicao != null)
-            {
+                // "oeste"
                 pos.DefinirValores(Posicao.Linha, Posicao.Coluna - 1);
 
                 if (tab.VerificarPosicao(pos) && PodeMover(pos))
                 {
                     matriz[pos.Linha, pos.Coluna] = true;
-
                 }
-            }
 
-            // "noroeste"
-            if (Posicao != null)
-            {
+                // "noroeste"
                 pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna - 1);
 
                 if (tab.VerificarPosicao(pos) && PodeMover(pos))
                 {
                     matriz[pos.Linha, pos.Coluna] = true;
-
                 }
             }
 

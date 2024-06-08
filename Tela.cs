@@ -5,6 +5,9 @@ namespace xadrez
 {
     class Tela
     {
+        /*
+         * Imprime na tela todo o tabuleiro com as peças.
+         */
         public static void ImprimirTabuleiro(Tabuleiro tabuleiro)
         {
             for (int i = 0; i < tabuleiro.Linhas; i++)
@@ -22,6 +25,10 @@ namespace xadrez
             Console.WriteLine("  a b c d e f g h");
         }
 
+        /*
+         * Imprime na tela todo o tabuleiro com as peças, e as posições possíveis 
+         * quando uma peça já foi escolhida para iniciar o movimento.
+         */
         public static void ImprimirTabuleiro(Tabuleiro tabuleiro, bool[,] posicoesPossiveis)
         {
             ConsoleColor fundoOriginal = Console.BackgroundColor;
@@ -53,6 +60,9 @@ namespace xadrez
             Console.BackgroundColor = fundoOriginal;
         }
 
+        /*
+         * Recebe a posição de uma peça na notação padrão de um jogo de zadrez.
+         */
         public static PosicaoXadrez LerPosicaoXadrez()
         {
             string? s = Console.ReadLine();
@@ -69,6 +79,11 @@ namespace xadrez
             return new PosicaoXadrez('a', 0);
         }
 
+        /*
+         * Imprime a peça com a sua cor e um espaço. Mas se não tiver peça, imprimirá "- ".
+         * Peça branca: será amarela.
+         * Peça preta: será azul.
+         */
         public static void ImprimirPeca(Peca? peca)
         {
             ConsoleColor aux;

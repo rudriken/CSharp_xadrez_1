@@ -7,6 +7,10 @@ namespace xadrez_jogo
         public char Coluna { get; set; } = coluna;
         public int Linha { get; set; } = linha;
 
+        /*
+         * Converte uma posição na notação padrão de um jogo de xadrez para a notação 
+         * de uma matriz na programação.
+         */
         public Posicao ToPosicao()
         {
             return new Posicao(8 - Linha, Coluna - 'a');

@@ -16,6 +16,30 @@
         }
 
         /*
+         * Verifica se há, pelo menos, um movimento possível para uma peça qualquer.
+         * Se houver, retornará 'true', se não, retornará 'false'.
+         */
+        public bool ExisteMovimentosPossiveis()
+        {
+            bool[,] matriz = MovimentosPossiveis();
+
+            for (int i = 0; i < Tabuleiro.Linhas; i++)
+                for (int j = 0; j < Tabuleiro.Colunas; j++)
+                    if (matriz[i, j])
+                        return true;
+
+            return false;
+        }
+
+        /*
+         * Verifica se é possível mover uma peça qualquer na posição de destino.
+         */
+        public bool PodeMoverPara(Posicao destino)
+        {
+            return MovimentosPossiveis()[destino.Linha, destino.Coluna];
+        }
+
+        /*
          * Retorna uma matriz mostrando todos as posições possíveis de uma peça qualquer 
          * no tabuleiro.
          */

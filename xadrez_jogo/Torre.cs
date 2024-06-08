@@ -28,9 +28,9 @@ namespace xadrez_jogo
 
             Posicao pos = new(0, 0);
 
-            // "norte"
             if (Posicao != null)
             {
+                // "norte"
                 pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna);
 
                 while (tab.VerificarPosicao(pos) && PodeMover(pos))
@@ -38,7 +38,7 @@ namespace xadrez_jogo
                     matriz[pos.Linha, pos.Coluna] = true;
 
                     if (
-                        tab.RetornarUmaPeca(pos) != null && 
+                        tab.RetornarUmaPeca(pos) != null &&
                         tab.RetornarUmaPeca(pos)?.Cor != cor
                     )
                     {
@@ -47,11 +47,8 @@ namespace xadrez_jogo
 
                     pos.Linha--;
                 }
-            }
 
-            // "sul"
-            if (Posicao != null)
-            {
+                // "sul"
                 pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna);
 
                 while (tab.VerificarPosicao(pos) && PodeMover(pos))
@@ -68,11 +65,8 @@ namespace xadrez_jogo
 
                     pos.Linha++;
                 }
-            }
 
-            // "leste"
-            if (Posicao != null)
-            {
+                // "leste"
                 pos.DefinirValores(Posicao.Linha, Posicao.Coluna + 1);
 
                 while (tab.VerificarPosicao(pos) && PodeMover(pos))
@@ -89,11 +83,8 @@ namespace xadrez_jogo
 
                     pos.Coluna++;
                 }
-            }
 
-            // "oeste"
-            if (Posicao != null)
-            {
+                // "oeste"
                 pos.DefinirValores(Posicao.Linha, Posicao.Coluna - 1);
 
                 while (tab.VerificarPosicao(pos) && PodeMover(pos))

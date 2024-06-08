@@ -11,25 +11,30 @@ namespace xadrez
             Posicao origem, destino;
             bool[,] posicoesPossiveis;
 
-            try
-            {
-                partida = new();
+            partida = new();
 
-                while (!partida.Terminada)
+            while (!partida.Terminada)
+            {
+                try
                 {
                     Console.Clear();
                     Tela.ImprimirTabuleiro(partida.Tabuleiro);
 
                     Console.WriteLine();
 
+                    Console.WriteLine("Turno: " + partida.Turno);
+                    Console.WriteLine("Aguardando jogada: " + partida.JogadorAtual);
+
+                    Console.WriteLine();
+
                     Console.Write("Origem: ");
                     origem = Tela.LerPosicaoXadrez().ToPosicao();
 
-                    posicoesPossiveis = 
-                        partida.Tabuleiro.RetornarUmaPeca(origem)?.MovimentosPossiveis() ?? 
+                    partida.ValidarPosicaoDeOrigem(origem);
+
+                    posicoesPossiveis =
+                        partida.Tabuleiro.RetornarUmaPeca(origem)?.MovimentosPossiveis() ??
                         new bool[partida.Tabuleiro.Linhas, partida.Tabuleiro.Colunas];
-
-
 
                     Console.Clear();
                     Tela.ImprimirTabuleiro(partida.Tabuleiro, posicoesPossiveis);
@@ -37,12 +42,16 @@ namespace xadrez
                     Console.Write("Destino: ");
                     destino = Tela.LerPosicaoXadrez().ToPosicao();
 
-                    partida.ExecutarMovimento(origem, destino);
+                    partida.ValidarPosicaoDeDestino(origem, destino);
+
+                    partida.RealizarJogada(origem, destino);
+
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+                catch (TabuleiroException erro)
+                {
+                    Console.WriteLine(erro.Message);
+                    Console.ReadLine();
+                }
             }
         }
     }
