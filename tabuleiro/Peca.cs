@@ -16,6 +16,14 @@
         }
 
         /*
+         * Decrementa a quantidade de movimentos de uma peça qualquer numa partida.
+         */
+        public void DecrementarQteMovimentos()
+        {
+            QteMovimentos--;
+        }
+
+        /*
          * Verifica se há, pelo menos, um movimento possível para uma peça qualquer.
          * Se houver, retornará 'true', se não, retornará 'false'.
          */
