@@ -41,9 +41,7 @@ namespace xadrez_jogo
                         tab.RetornarUmaPeca(pos) != null &&
                         tab.RetornarUmaPeca(pos)?.Cor != cor
                     )
-                    {
                         break;
-                    }
 
                     pos.Linha--;
                 }
@@ -59,9 +57,7 @@ namespace xadrez_jogo
                         tab.RetornarUmaPeca(pos) != null &&
                         tab.RetornarUmaPeca(pos)?.Cor != cor
                     )
-                    {
                         break;
-                    }
 
                     pos.Linha++;
                 }
@@ -77,9 +73,7 @@ namespace xadrez_jogo
                         tab.RetornarUmaPeca(pos) != null &&
                         tab.RetornarUmaPeca(pos)?.Cor != cor
                     )
-                    {
                         break;
-                    }
 
                     pos.Coluna++;
                 }
@@ -95,9 +89,7 @@ namespace xadrez_jogo
                         tab.RetornarUmaPeca(pos) != null &&
                         tab.RetornarUmaPeca(pos)?.Cor != cor
                     )
-                    {
                         break;
-                    }
 
                     pos.Coluna--;
                 }

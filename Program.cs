@@ -41,12 +41,15 @@ namespace xadrez
 
                     partida.RealizarJogada(origem, destino);
 
+                    Console.Clear();
+                    Tela.ImprimirPartida(partida);
                 }
                 catch (TabuleiroException erro)
                 {
                     Console.WriteLine(erro.Message);
                     Console.ReadLine();
                 }
+
             }
         }
     }

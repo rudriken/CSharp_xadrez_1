@@ -32,10 +32,10 @@ namespace xadrez_jogo
         {
             Peca? p, pecaCapturada;
 
-            p = Tabuleiro?.RetirarPeca(origem);
+            p = Tabuleiro.RetirarPeca(origem);
             p?.IncrementarQteMovimentos();
-            pecaCapturada = Tabuleiro?.RetirarPeca(destino);
-            Tabuleiro?.ColocarPeca(p, destino);
+            pecaCapturada = Tabuleiro.RetirarPeca(destino);
+            Tabuleiro.ColocarPeca(p, destino);
 
             if (pecaCapturada != null)
                 Capturadas.Add(pecaCapturada);
@@ -82,8 +82,13 @@ namespace xadrez_jogo
             else
                 Xeque = false;
 
-            Turno++;
-            MudarJogador();
+            if (TesteXequeMate(Adversaria(JogadorAtual)))
+                Terminada = true;
+            else
+            {
+                Turno++;
+                MudarJogador();
+            }
         }
 
         /*
@@ -95,35 +100,25 @@ namespace xadrez_jogo
         public void ValidarPosicaoDeOrigem(Posicao origem)
         {
             if (Tabuleiro.RetornarUmaPeca(origem) == null)
-            {
                 throw new TabuleiroException(
                     "Não existe peça na posição de origem escolhida!"
                 );
-            }
 
             if (JogadorAtual != Tabuleiro.RetornarUmaPeca(origem)?.Cor)
-            {
                 throw new TabuleiroException(
                     "A peça de origem escolhida não é sua!"
                 );
-            }
 
             if (!Tabuleiro.RetornarUmaPeca(origem)?.ExisteMovimentosPossiveis() ?? false)
-            {
                 throw new TabuleiroException(
                     "Não há movimentos possíveis para a peça de origem escolhida!"
                 );
-            }
         }
 
         public void ValidarPosicaoDeDestino(Posicao origem, Posicao destino)
         {
-            if (!Tabuleiro.RetornarUmaPeca(origem)?.PodeMoverPara(destino) ?? false)
-            {
-                throw new TabuleiroException("Posição de destino inválida!");
-            }
-
-
+            if (!Tabuleiro.RetornarUmaPeca(origem)?.PodeMoverPara(destino) ?? false)            
+                throw new TabuleiroException("Posição de destino inválida!");            
         }
 
         /*
@@ -212,6 +207,46 @@ namespace xadrez_jogo
         }
 
         /*
+        * Verifica se não há mais movimentos possíveis para salvar o Rei, ou seja, se todas 
+        * as peças do jogador atual são incapazes de tirar o seu Rei do "xeque".
+        * Se não houver mais, significa "xeque mate".
+        */
+        public bool TesteXequeMate(Cor cor)
+        {
+            bool[,] movPossiveisDaPecaEmJogo;
+            Peca? pecaCapturada;
+            Posicao origem, destino;
+            bool testeXeque;
+
+            if (!EstaEmXeque(cor))
+                return false;
+
+            foreach (Peca peca in PecasEmJogo(cor))
+            {
+                if (peca.Posicao == null)
+                    continue;
+
+                movPossiveisDaPecaEmJogo = peca.MovimentosPossiveis();
+
+                for (int i = 0; i < Tabuleiro.Linhas; i++)
+                    for (int j = 0; j < Tabuleiro.Colunas; j++)
+                        if (movPossiveisDaPecaEmJogo[i, j])
+                        {
+                            origem = peca.Posicao;
+                            destino = new Posicao(i, j);
+                            pecaCapturada = ExecutarMovimento(origem, destino);
+                            testeXeque = EstaEmXeque(cor);
+                            DesfazMovimento(origem, destino, pecaCapturada);
+
+                            if (!testeXeque)
+                                return false;
+                        }
+            }
+
+            return true;
+        }
+
+        /*
          * Coloca uma peça no tabuleiro na posição escolhida.
          */
         public void ColocarNovaPeca(char coluna, int linha, Peca peca)
@@ -226,18 +261,11 @@ namespace xadrez_jogo
         private void ColocarPecas()
         {
             ColocarNovaPeca('c', 1, new Torre(Tabuleiro, Cor.Branca));
-            ColocarNovaPeca('c', 2, new Torre(Tabuleiro, Cor.Branca));
-            ColocarNovaPeca('d', 2, new Torre(Tabuleiro, Cor.Branca));
-            ColocarNovaPeca('e', 2, new Torre(Tabuleiro, Cor.Branca));
-            ColocarNovaPeca('e', 1, new Torre(Tabuleiro, Cor.Branca));
             ColocarNovaPeca('d', 1, new Rei(Tabuleiro, Cor.Branca));
+            ColocarNovaPeca('h', 7, new Torre(Tabuleiro, Cor.Branca));
 
-            ColocarNovaPeca('c', 7, new Torre(Tabuleiro, Cor.Preta));
-            ColocarNovaPeca('c', 8, new Torre(Tabuleiro, Cor.Preta));
-            ColocarNovaPeca('d', 7, new Torre(Tabuleiro, Cor.Preta));
-            ColocarNovaPeca('e', 7, new Torre(Tabuleiro, Cor.Preta));
-            ColocarNovaPeca('e', 8, new Torre(Tabuleiro, Cor.Preta));
-            ColocarNovaPeca('d', 8, new Rei(Tabuleiro, Cor.Preta));
+            ColocarNovaPeca('a', 8, new Rei(Tabuleiro, Cor.Preta));
+            ColocarNovaPeca('b', 8, new Torre(Tabuleiro, Cor.Preta));
         }
     }
 }
