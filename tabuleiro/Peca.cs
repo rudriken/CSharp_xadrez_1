@@ -42,7 +42,7 @@
         /*
          * Verifica se é possível mover uma peça qualquer na posição de destino.
          */
-        public bool PodeMoverPara(Posicao destino)
+        public bool MovimentoPossivel(Posicao destino)
         {
             return MovimentosPossiveis()[destino.Linha, destino.Coluna];
         }
