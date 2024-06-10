@@ -2,15 +2,15 @@
 
 namespace xadrez_jogo
 {
-    class Rei(Tabuleiro tab, Cor cor) : Peca(tab, cor)
+    class Cavalo(Tabuleiro tab, Cor cor) : Peca(tab, cor)
     {
         public override string ToString()
         {
-            return "R";
+            return "C";
         }
 
         /*
-         * Verifica se o Rei pode ir numa determinada posição, ou seja, 
+         * Verifica se o Cavalo pode ir numa determinada posição, ou seja, 
          * se tal posição está vaga ou se tem peça oponente.
          */
         private bool PodeMover(Posicao posicao)
@@ -20,7 +20,7 @@ namespace xadrez_jogo
         }
 
         /*
-         * Retorna uma matriz mostrando todos as posições possíveis do Rei no tabuleiro.
+         * Retorna uma matriz mostrando todos as posições possíveis do Cavalo no tabuleiro.
          */
         public override bool[,] MovimentosPossiveis()
         {
@@ -30,43 +30,55 @@ namespace xadrez_jogo
 
             if (Posicao != null)
             {
-                // "norte"
-                pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna);
+                // ###
+                //   #
+                pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna - 2);
                 if (tab.VerificarPosicao(pos) && PodeMover(pos))
                     matriz[pos.Linha, pos.Coluna] = true;
 
-                // "nordeste"
-                pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna + 1);
+                //  #
+                //  #
+                // ##
+                pos.DefinirValores(Posicao.Linha + 2, Posicao.Coluna - 1);
                 if (tab.VerificarPosicao(pos) && PodeMover(pos))
                     matriz[pos.Linha, pos.Coluna] = true;
 
-                // "leste"
-                pos.DefinirValores(Posicao.Linha, Posicao.Coluna + 1);
+                // #
+                // ###
+                pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna + 2);
                 if (tab.VerificarPosicao(pos) && PodeMover(pos))
                     matriz[pos.Linha, pos.Coluna] = true;
 
-                // "sudeste"
-                pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna + 1);
+                // ##
+                // #
+                // #
+                pos.DefinirValores(Posicao.Linha - 2, Posicao.Coluna + 1);
                 if (tab.VerificarPosicao(pos) && PodeMover(pos))
                     matriz[pos.Linha, pos.Coluna] = true;
 
-                // "sul"
-                pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna);
+                // ###
+                // #
+                pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna + 2);
                 if (tab.VerificarPosicao(pos) && PodeMover(pos))
                     matriz[pos.Linha, pos.Coluna] = true;
 
-                // "sudoeste"
-                pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna - 1);
+                // ##
+                //  #
+                //  #
+                pos.DefinirValores(Posicao.Linha - 2, Posicao.Coluna - 1);
                 if (tab.VerificarPosicao(pos) && PodeMover(pos))
                     matriz[pos.Linha, pos.Coluna] = true;
 
-                // "oeste"
-                pos.DefinirValores(Posicao.Linha, Posicao.Coluna - 1);
+                //   #
+                // ###
+                pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna - 2);
                 if (tab.VerificarPosicao(pos) && PodeMover(pos))
                     matriz[pos.Linha, pos.Coluna] = true;
 
-                // "noroeste"
-                pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna - 1);
+                // #
+                // #
+                // ##
+                pos.DefinirValores(Posicao.Linha + 2, Posicao.Coluna + 1);
                 if (tab.VerificarPosicao(pos) && PodeMover(pos))
                     matriz[pos.Linha, pos.Coluna] = true;
             }

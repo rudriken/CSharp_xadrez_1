@@ -2,15 +2,15 @@
 
 namespace xadrez_jogo
 {
-    class Torre(Tabuleiro tab, Cor cor) : Peca(tab, cor)
+    class Dama(Tabuleiro tab, Cor cor) : Peca(tab, cor)
     {
         public override string ToString()
         {
-            return "T";
+            return "D";
         }
 
         /*
-         * Verifica se a Teorre pode ir numa determinada posição, ou seja, 
+         * Verifica se a Dama pode ir numa determinada posição, ou seja, 
          * se tal posição está vaga ou se tem peça oponente.
          */
         private bool PodeMover(Posicao posicao)
@@ -20,7 +20,7 @@ namespace xadrez_jogo
         }
 
         /*
-         * Retorna uma matriz mostrando todos as posições possíveis da Torre no tabuleiro.
+         * Retorna uma matriz mostrando todos as posições possíveis da Dama no tabuleiro.
          */
         public override bool[,] MovimentosPossiveis()
         {
@@ -45,8 +45,8 @@ namespace xadrez_jogo
                     pos.Linha--;
                 }
 
-                // "sul"
-                pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna);
+                // "nordeste"
+                pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna + 1);
                 while (tab.VerificarPosicao(pos) && PodeMover(pos))
                 {
                     matriz[pos.Linha, pos.Coluna] = true;
@@ -57,7 +57,7 @@ namespace xadrez_jogo
                     )
                         break;
 
-                    pos.Linha++;
+                    pos.Linha--;
                 }
 
                 // "leste"
@@ -75,8 +75,68 @@ namespace xadrez_jogo
                     pos.Coluna++;
                 }
 
+                // "sudeste"
+                pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna + 1);
+                while (tab.VerificarPosicao(pos) && PodeMover(pos))
+                {
+                    matriz[pos.Linha, pos.Coluna] = true;
+
+                    if (
+                        tab.RetornarUmaPeca(pos) != null &&
+                        tab.RetornarUmaPeca(pos)?.Cor != cor
+                    )
+                        break;
+
+                    pos.Linha++;
+                }
+
+                // "sul"
+                pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna);
+                while (tab.VerificarPosicao(pos) && PodeMover(pos))
+                {
+                    matriz[pos.Linha, pos.Coluna] = true;
+
+                    if (
+                        tab.RetornarUmaPeca(pos) != null &&
+                        tab.RetornarUmaPeca(pos)?.Cor != cor
+                    )
+                        break;
+
+                    pos.Linha++;
+                }
+
+                // "sudoeste"
+                pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna - 1);
+                while (tab.VerificarPosicao(pos) && PodeMover(pos))
+                {
+                    matriz[pos.Linha, pos.Coluna] = true;
+
+                    if (
+                        tab.RetornarUmaPeca(pos) != null &&
+                        tab.RetornarUmaPeca(pos)?.Cor != cor
+                    )
+                        break;
+
+                    pos.Coluna++;
+                }
+
                 // "oeste"
                 pos.DefinirValores(Posicao.Linha, Posicao.Coluna - 1);
+                while (tab.VerificarPosicao(pos) && PodeMover(pos))
+                {
+                    matriz[pos.Linha, pos.Coluna] = true;
+
+                    if (
+                        tab.RetornarUmaPeca(pos) != null &&
+                        tab.RetornarUmaPeca(pos)?.Cor != cor
+                    )
+                        break;
+
+                    pos.Coluna--;
+                }
+
+                // "noroeste"
+                pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna - 1);
                 while (tab.VerificarPosicao(pos) && PodeMover(pos))
                 {
                     matriz[pos.Linha, pos.Coluna] = true;
