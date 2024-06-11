@@ -8,8 +8,8 @@ namespace xadrez_jogo
         public int Turno { get; private set; }
         public Cor JogadorAtual { get; private set; }
         public bool Terminada { get; private set; }
-        private HashSet<Peca> Pecas;
-        private HashSet<Peca> Capturadas;
+        private readonly HashSet<Peca> Pecas;
+        private readonly HashSet<Peca> Capturadas;
         public bool Xeque { get; private set; }
 
         /*
@@ -40,6 +40,45 @@ namespace xadrez_jogo
             if (pecaCapturada != null)
                 Capturadas.Add(pecaCapturada);
 
+            // #jogadaespecial: roque
+            /* Jogada em que tanto o Rei quanto a Torre movimentam casas entre si 
+             * cada um, tendo as suas posições invertidas. Essa jogada pode ocorrer 
+             * somente quando: 
+             *  1 -> for o primeiro movimento do Rei e da Torre;
+             *  2 -> as casas entre o Rei e a Torre estão vagas;
+             *  3 -> o Rei não pode ficar em xeque.
+             */
+
+            // #jogadaespecial: roque pequeno
+            /* 
+             * O Rei movimenta duas casas à direita e a Torre movimenta duas  
+             * casas à esquerda ficando à esquerda do Rei 
+             * (antes a Torre estava três casas à direita do Rei).
+             */
+            if (p is Rei && destino.Coluna == origem.Coluna + 2)
+            {
+                Posicao origemTorre = new(origem.Linha, origem.Coluna + 3);
+                Posicao destinoTorre = new(origem.Linha, origem.Coluna + 1);
+                Peca? t = Tabuleiro.RetirarPeca(origemTorre);
+                t?.IncrementarQteMovimentos();
+                Tabuleiro.ColocarPeca(t, destinoTorre);
+            }
+
+            // #jogadaespecial: roque grande
+            /* 
+             * O Rei movimenta duas casas à esquerda e a Torre movimenta três  
+             * casas à direita ficando à direita do Rei 
+             * (antes a Torre estava quatro casas à esquerda do Rei).
+             */
+            if (p is Rei && destino.Coluna == origem.Coluna - 2)
+            {
+                Posicao origemTorre = new(origem.Linha, origem.Coluna - 4);
+                Posicao destinoTorre = new(origem.Linha, origem.Coluna - 1);
+                Peca? t = Tabuleiro.RetirarPeca(origemTorre);
+                t?.IncrementarQteMovimentos();
+                Tabuleiro.ColocarPeca(t, destinoTorre);
+            }
+
             return pecaCapturada;
         }
 
@@ -59,6 +98,36 @@ namespace xadrez_jogo
             }
 
             Tabuleiro.ColocarPeca(p, origem);
+
+            // #jogadaespecial: roque pequeno
+            /* 
+             * O Rei movimenta duas casas à direita e a Torre movimenta duas  
+             * casas à esquerda ficando à esquerda do Rei 
+             * (antes a Torre estava três casas à direita do Rei).
+             */
+            if (p is Rei && destino.Coluna == origem.Coluna + 2)
+            {
+                Posicao origemTorre = new(origem.Linha, origem.Coluna + 3);
+                Posicao destinoTorre = new(origem.Linha, origem.Coluna + 1);
+                Peca? t = Tabuleiro.RetirarPeca(destinoTorre);
+                t?.DecrementarQteMovimentos();
+                Tabuleiro.ColocarPeca(t, origemTorre);
+            }
+
+            // #jogadaespecial: roque grande
+            /* 
+             * O Rei movimenta duas casas à esquerda e a Torre movimenta três  
+             * casas à direita ficando à direita do Rei 
+             * (antes a Torre estava quatro casas à esquerda do Rei).
+             */
+            if (p is Rei && destino.Coluna == origem.Coluna - 2)
+            {
+                Posicao origemTorre = new(origem.Linha, origem.Coluna - 4);
+                Posicao destinoTorre = new(origem.Linha, origem.Coluna - 1);
+                Peca? t = Tabuleiro.RetirarPeca(destinoTorre);
+                t?.DecrementarQteMovimentos();
+                Tabuleiro.ColocarPeca(t, origemTorre);
+            }
         }
 
         /*
@@ -264,7 +333,7 @@ namespace xadrez_jogo
             ColocarNovaPeca('b', 1, new Cavalo(Tabuleiro, Cor.Branca));
             ColocarNovaPeca('c', 1, new Bispo(Tabuleiro, Cor.Branca));
             ColocarNovaPeca('d', 1, new Dama(Tabuleiro, Cor.Branca));
-            ColocarNovaPeca('e', 1, new Rei(Tabuleiro, Cor.Branca));
+            ColocarNovaPeca('e', 1, new Rei(Tabuleiro, Cor.Branca, this));
             ColocarNovaPeca('f', 1, new Bispo(Tabuleiro, Cor.Branca));
             ColocarNovaPeca('g', 1, new Cavalo(Tabuleiro, Cor.Branca));
             ColocarNovaPeca('h', 1, new Torre(Tabuleiro, Cor.Branca));
@@ -280,8 +349,8 @@ namespace xadrez_jogo
             ColocarNovaPeca('a', 8, new Torre(Tabuleiro, Cor.Preta));
             ColocarNovaPeca('b', 8, new Cavalo(Tabuleiro, Cor.Preta));
             ColocarNovaPeca('c', 8, new Bispo(Tabuleiro, Cor.Preta));
-            ColocarNovaPeca('d', 8, new Rei(Tabuleiro, Cor.Preta));
-            ColocarNovaPeca('e', 8, new Dama(Tabuleiro, Cor.Preta));
+            ColocarNovaPeca('d', 8, new Dama(Tabuleiro, Cor.Preta));
+            ColocarNovaPeca('e', 8, new Rei(Tabuleiro, Cor.Preta, this));
             ColocarNovaPeca('f', 8, new Bispo(Tabuleiro, Cor.Preta));
             ColocarNovaPeca('g', 8, new Cavalo(Tabuleiro, Cor.Preta));
             ColocarNovaPeca('h', 8, new Torre(Tabuleiro, Cor.Preta));

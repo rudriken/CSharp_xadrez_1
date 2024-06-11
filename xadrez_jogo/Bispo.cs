@@ -43,6 +43,7 @@ namespace xadrez_jogo
                         break;
 
                     pos.Linha--;
+                    pos.Coluna++;
                 }
 
                 // "sudeste"
@@ -58,6 +59,7 @@ namespace xadrez_jogo
                         break;
 
                     pos.Linha++;
+                    pos.Coluna++;
                 }
 
                 // "sudoeste"
@@ -72,7 +74,8 @@ namespace xadrez_jogo
                     )
                         break;
 
-                    pos.Coluna++;
+                    pos.Linha++;
+                    pos.Coluna--;
                 }
 
                 // "noroeste"
@@ -87,6 +90,7 @@ namespace xadrez_jogo
                     )
                         break;
 
+                    pos.Linha--;
                     pos.Coluna--;
                 }
             }
