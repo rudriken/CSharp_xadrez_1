@@ -50,9 +50,15 @@ namespace xadrez_jogo
                     if (Tabuleiro.VerificarPosicao(pos) && Livre(pos))
                         matriz[pos.Linha, pos.Coluna] = true;
 
-                    // Branco indo 2 casas para "norte" se ela estiver livre e 1º movimento
+                    // Branco indo 2 casas para "norte" se ela estiver livre e 1º movimento, 
+                    // e também se a próxima casa do "norte" estiver livre.
                     pos.DefinirValores(Posicao.Linha - 2, Posicao.Coluna);
-                    if (Tabuleiro.VerificarPosicao(pos) && Livre(pos) && QteMovimentos == 0)
+                    if (
+                        Tabuleiro.VerificarPosicao(pos) &&
+                        Livre(pos) &&
+                        QteMovimentos == 0 &&
+                        Livre(new Posicao(Posicao.Linha - 1, Posicao.Coluna))
+                    )
                         matriz[pos.Linha, pos.Coluna] = true;
 
                     // Branco indo 1 casa para "noroeste" se nela existir inimigo
@@ -104,9 +110,15 @@ namespace xadrez_jogo
                     if (Tabuleiro.VerificarPosicao(pos) && Livre(pos))
                         matriz[pos.Linha, pos.Coluna] = true;
 
-                    // Preto indo 2 casas para "sul" se ela estiver livre e 1º movimento
+                    // Preto indo 2 casas para "sul" se ela estiver livre e 1º movimento, 
+                    // e também se a próxima casa do "sul" estiver livre.
                     pos.DefinirValores(Posicao.Linha + 2, Posicao.Coluna);
-                    if (Tabuleiro.VerificarPosicao(pos) && Livre(pos) && QteMovimentos == 0)
+                    if (
+                        Tabuleiro.VerificarPosicao(pos) && 
+                        Livre(pos) && 
+                        QteMovimentos == 0 && 
+                        Livre(new Posicao(Posicao.Linha + 1, Posicao.Coluna))
+                    )
                         matriz[pos.Linha, pos.Coluna] = true;
 
                     // Preto indo 1 casa para "sudoeste" se nela existir inimigo

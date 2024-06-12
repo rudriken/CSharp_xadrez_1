@@ -58,6 +58,7 @@ namespace xadrez_jogo
                         break;
 
                     pos.Linha--;
+                    pos.Coluna++;
                 }
 
                 // "leste"
@@ -88,6 +89,7 @@ namespace xadrez_jogo
                         break;
 
                     pos.Linha++;
+                    pos.Coluna++;
                 }
 
                 // "sul"
@@ -117,7 +119,8 @@ namespace xadrez_jogo
                     )
                         break;
 
-                    pos.Coluna++;
+                    pos.Linha++;
+                    pos.Coluna--;
                 }
 
                 // "oeste"
@@ -147,6 +150,7 @@ namespace xadrez_jogo
                     )
                         break;
 
+                    pos.Linha--;
                     pos.Coluna--;
                 }
             }

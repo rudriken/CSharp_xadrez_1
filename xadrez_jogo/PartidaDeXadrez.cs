@@ -185,15 +185,41 @@ namespace xadrez_jogo
         public void RealizarJogada(Posicao origem, Posicao destino)
         {
             Peca? pecaCapturada = ExecutarMovimento(origem, destino);
+            Peca? p = Tabuleiro.RetornarUmaPeca(destino);
 
-            // eu não posso ficar em xeque com a minha própria jogada ...
+            // eu não posso ficar em xeque com a minha própria jogada, portanto ...
             if (EstaEmXeque(JogadorAtual))
             {
                 DesfazMovimento(origem, destino, pecaCapturada);
                 throw new TabuleiroException("Você não pode se colocar em xeque!");
             }
 
-            // ... mas o adversário, sim, pode ficar em xeque com a minha jogada.
+            // #jogadaespecial: promoção
+            /* 
+             * Um peão, ao alcançar a última linha do tabuleiro é promovido, 
+             * o jogador é obrigado a escolher entre uma das seguintes peças para 
+             * substituí-lo: Dama, Torre, Bispo ou Cavalo. Dama costuma ser o padrão.
+             */
+            if (p is Peao)
+            {
+                if (
+                    (p.Cor == Cor.Branca && destino.Linha == 0) || 
+                    (p.Cor == Cor.Preta && destino.Linha == 7)
+                )
+                {
+                    p = Tabuleiro.RetirarPeca(destino);
+
+                    if (p != null)
+                    {
+                        Pecas.Remove(p);
+                        Peca dama = new Dama(Tabuleiro, p.Cor);
+                        Tabuleiro.ColocarPeca(dama, destino);
+                        Pecas.Add(dama);
+                    }
+                }
+            }
+
+            // o adversário, sim, pode ficar em xeque com a minha jogada, portanto ...
             if (EstaEmXeque(Adversaria(JogadorAtual)))
                 Xeque = true;
             else
@@ -218,7 +244,7 @@ namespace xadrez_jogo
              *  3 -> se o Peão a ser capturado se movimentou duas casas;
              *  4 -> se o Peão a ser capturado está do lado do Peão que vai capturar.
              */
-            Peca? p = Tabuleiro.RetornarUmaPeca(destino);
+            
             if (
                 p is Peao &&
                 (destino.Linha == origem.Linha - 2 || destino.Linha == origem.Linha + 2)
