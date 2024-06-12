@@ -4,7 +4,7 @@ namespace xadrez_jogo
 {
     class Rei(Tabuleiro tab, Cor cor, PartidaDeXadrez partida) : Peca(tab, cor)
     {
-        private PartidaDeXadrez Partida = partida;
+        private readonly PartidaDeXadrez Partida = partida;
 
         public override string ToString()
         {
