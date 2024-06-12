@@ -23,16 +23,6 @@ namespace xadrez_jogo
         }
 
         /*
-         * Verifica se o Peão pode ir numa determinada posição, ou seja, 
-         * se tal posição está vaga ou se tem peça oponente.
-         */
-        private bool PodeMover(Posicao posicao)
-        {
-            Peca? pecaPerto = tab.RetornarUmaPeca(posicao);
-            return pecaPerto == null || pecaPerto.Cor != cor;
-        }
-
-        /*
          * Retorna uma matriz mostrando todos as posições possíveis do Peão no tabuleiro.
          */
         public override bool[,] MovimentosPossiveis()

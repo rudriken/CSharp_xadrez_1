@@ -327,7 +327,7 @@ namespace xadrez_jogo
         /*
         * Define o adversário do jogador atual pela cor da peça.
         */
-        private Cor Adversaria(Cor cor)
+        private static Cor Adversaria(Cor cor)
         {
             if (cor == Cor.Branca)
                 return Cor.Preta;
